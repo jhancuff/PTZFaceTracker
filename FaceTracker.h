@@ -48,7 +48,7 @@ private:
 
 	bool LOST;
 	cv::Ptr<cv::Tracker> tracker;
-	cv::Rect2d position;
+	cv::Rect position;
 	cv::Point target;
 	double dist(int x1, int y1, int x2, int y2);
 

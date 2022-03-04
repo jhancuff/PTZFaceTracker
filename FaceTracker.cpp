@@ -84,7 +84,7 @@ void FaceTracker::startMotion() {
 void FaceTracker::stopMotion() {
 	MOTION = false;
 	// re-initialize the tracker to the last match
-	tracker = cv::Tracker::create( "KCF" );
+	tracker = cv::TrackerKCF::create();
 	tracker->init(frame,position);
 //	LOST = false;
 }
@@ -131,7 +131,7 @@ bool FaceTracker::update() {
 			cv::minMaxLoc( result, &minVal, &maxVal, &minLoc, &maxLoc, cv::Mat() );
 			if ( maxVal > 0.5 ) {
 				// re-initialize the tracker to the matching face
-				tracker = cv::Tracker::create( "KCF" );
+				tracker = cv::TrackerKCF::create();
 				tracker->init(frame,faces[i]);
 
 				// update tracking position
@@ -179,7 +179,7 @@ bool FaceTracker::update() {
 					// show matched face
 					cv::rectangle( display, position, cv::Scalar( 255, 127, 0 ), 2, 1 );
 					// initialize the tracker to the matching face
-					tracker = cv::Tracker::create( "KCF" );
+					tracker = cv::TrackerKCF::create();
 					tracker->init(frame,position);
 					LOST = false; 
 #ifdef LOG
@@ -210,7 +210,7 @@ bool FaceTracker::update() {
 					// show matched face
 					cv::rectangle( display, position, cv::Scalar( 255, 127, 0 ), 2, 1 );
 					// initialize the tracker to the matching face
-					tracker = cv::Tracker::create( "KCF" );
+					tracker = cv::TrackerKCF::create();
 					tracker->init(frame,position);
 #ifdef LOG
 	(*logfile) << (double)duration.count() / 1000 << ", " << "MOTIONMATCH" << ", " << position.x << ", " << position.y << ", " << position.width << ", " << position.height << endl;
@@ -299,7 +299,7 @@ void FaceTracker::hookup() {
 			firstMatch = frame(face).clone();
 		}
 		// initialize the tracker to the selected face
-		tracker = cv::Tracker::create( "KCF" );
+		tracker = cv::TrackerKCF::create();
 		tracker->init(frame,faces[selected]);
 		LOST = false;
 	}
